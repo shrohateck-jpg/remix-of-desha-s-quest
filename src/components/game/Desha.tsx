@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import deshaIdle from "@/assets/desha-idle.png";
-import deshaCelebrating from "@/assets/desha-celebrating.png";
-import deshaThinking from "@/assets/desha-thinking.png";
-import deshaDisappointed from "@/assets/desha-disappointed.png";
+import deshaIdle from "@/assets/desha/idle.png";
+import deshaCelebrating from "@/assets/desha/celebrating.png";
+import deshaThinking from "@/assets/desha/thinking.png";
+import deshaDisappointed from "@/assets/desha/disappointed.png";
 
 export type DeshaExpression = "idle" | "celebrating" | "thinking" | "disappointed";
 
