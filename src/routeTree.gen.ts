@@ -9,38 +9,87 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedHomeRouteImport } from './routes/_authenticated/home'
+import { Route as AuthenticatedChallengeNewRouteImport } from './routes/_authenticated/challenge.new'
+import { Route as AuthenticatedChallengeActiveRouteImport } from './routes/_authenticated/challenge.active'
 
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedHomeRoute = AuthenticatedHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedChallengeNewRoute =
+  AuthenticatedChallengeNewRouteImport.update({
+    id: '/challenge/new',
+    path: '/challenge/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedChallengeActiveRoute =
+  AuthenticatedChallengeActiveRouteImport.update({
+    id: '/challenge/active',
+    path: '/challenge/active',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/challenge/active': typeof AuthenticatedChallengeActiveRoute
+  '/challenge/new': typeof AuthenticatedChallengeNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/home': typeof AuthenticatedHomeRoute
+  '/challenge/active': typeof AuthenticatedChallengeActiveRoute
+  '/challenge/new': typeof AuthenticatedChallengeNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/home': typeof AuthenticatedHomeRoute
+  '/_authenticated/challenge/active': typeof AuthenticatedChallengeActiveRoute
+  '/_authenticated/challenge/new': typeof AuthenticatedChallengeNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/home' | '/challenge/active' | '/challenge/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/home' | '/challenge/active' | '/challenge/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/home'
+    | '/_authenticated/challenge/active'
+    | '/_authenticated/challenge/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +97,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/home': {
+      id: '/_authenticated/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof AuthenticatedHomeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/challenge/new': {
+      id: '/_authenticated/challenge/new'
+      path: '/challenge/new'
+      fullPath: '/challenge/new'
+      preLoaderRoute: typeof AuthenticatedChallengeNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/challenge/active': {
+      id: '/_authenticated/challenge/active'
+      path: '/challenge/active'
+      fullPath: '/challenge/active'
+      preLoaderRoute: typeof AuthenticatedChallengeActiveRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedHomeRoute: typeof AuthenticatedHomeRoute
+  AuthenticatedChallengeActiveRoute: typeof AuthenticatedChallengeActiveRoute
+  AuthenticatedChallengeNewRoute: typeof AuthenticatedChallengeNewRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedHomeRoute: AuthenticatedHomeRoute,
+  AuthenticatedChallengeActiveRoute: AuthenticatedChallengeActiveRoute,
+  AuthenticatedChallengeNewRoute: AuthenticatedChallengeNewRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
