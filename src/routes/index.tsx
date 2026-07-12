@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       { title: "ديشا — لعبة الإنتاجية الشريرة 😈" },
       { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
       { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { property: "og:description", content: "حوّل مهامك لتحديات وخلي ديشا يحكم عليك. تقدر تكسبه؟" },
+      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
     ],
   }),
   component: LandingPage,

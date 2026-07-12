@@ -71,14 +71,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: "ديشا — لعبة الإنتاجية الشريرة" },
-      { name: "description", content: "حوّل مهامك لتحديات بوقت حقيقي، وخلي ديشا يحكم على أدائك بالصور. اكسب XP ونقاط وستريكات." },
+      { title: "ديشا — لعبة الإنتاجية الشريرة 😈" },
+      { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
       { name: "author", content: "DESHA" },
-      { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة" },
-      { property: "og:description", content: "حوّل مهامك لتحديات وخلي ديشا يحكم عليك بالصور. تقدر تكسبه؟" },
+      { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
+      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#17111f" },
+      { name: "twitter:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
+      { name: "twitter:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
     ],
     links: [
       {
