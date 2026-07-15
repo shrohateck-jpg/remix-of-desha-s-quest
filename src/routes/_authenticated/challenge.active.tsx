@@ -11,6 +11,7 @@ import { desha } from "@/lib/game";
 import { Desha } from "@/components/game/Desha";
 import { DeshaSays } from "@/components/game/DeshaSays";
 import { Countdown } from "@/components/game/Countdown";
+import { useLang } from "@/contexts/LangContext";
 
 export const Route = createFileRoute("/_authenticated/challenge/active")({
   head: () => ({
@@ -53,6 +54,7 @@ async function sha256Hex(blob: Blob): Promise<string> {
 }
 
 function ActiveChallengePage() {
+  const { tr, dir } = useLang();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: challenge, isLoading } = useQuery(activeChallengeQuery);
@@ -167,7 +169,7 @@ function ActiveChallengePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6" dir={dir}>
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="glass rounded-3xl p-6 text-center">
         <h1 className="font-display text-2xl font-bold">{challenge.title}</h1>
         {challenge.description && <p className="mt-1 text-sm text-muted-foreground">{challenge.description}</p>}
@@ -209,7 +211,7 @@ function ActiveChallengePage() {
                   onClick={submitProof}
                   className="gradient-magic glow-strong rounded-2xl px-8 py-3 font-bold text-primary-foreground"
                 >
-                  ابعت لديشا 🔮
+                  {tr.challenge_submit_btn}
                 </button>
                 <button
                   onClick={() => fileRef.current?.click()}
@@ -232,8 +234,8 @@ function ActiveChallengePage() {
                 <Camera size={34} />
                 <ImagePlus size={34} />
               </div>
-              <p className="font-bold">صوّر أو ارفع صورة الدليل</p>
-              <p className="text-xs text-muted-foreground">اسحب الصورة هنا أو دوس للاختيار</p>
+              <p className="font-bold">{tr.challenge_upload_proof}</p>
+              <p className="max-w-sm text-xs leading-6 text-muted-foreground">{dir === "rtl" ? "ارفع صورة واضحة وحديثة تبين النتيجة كاملة. ديشا هيحلل علاقتها بالتحدي تلقائياً." : "Upload a clear, recent photo showing the full result. DESHA will automatically assess its relevance."}</p>
             </motion.button>
           )}
         </AnimatePresence>

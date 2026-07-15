@@ -2,13 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Flame, Gem, Swords, Gift } from "lucide-react";
+import { ArrowLeft, Flame, Gem, Swords, Gift } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { profileQuery, activeChallengeQuery } from "@/lib/queries";
 import { desha, STATUS_LABELS, formatDuration } from "@/lib/game";
 import { Desha } from "@/components/game/Desha";
 import { DeshaSays } from "@/components/game/DeshaSays";
 import { XPBar } from "@/components/game/XPBar";
+import { useLang } from "@/contexts/LangContext";
 
 export const Route = createFileRoute("/_authenticated/home")({
   head: () => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/home")({
 });
 
 function HomePage() {
+  const { tr } = useLang();
   const queryClient = useQueryClient();
   const { data: profile } = useQuery(profileQuery);
   const { data: active } = useQuery(activeChallengeQuery);
@@ -51,15 +53,15 @@ function HomePage() {
 
   if (!profile) {
     return (
-      <div className="flex flex-col items-center py-20">
+      <div className="glass flex flex-col items-center rounded-3xl py-20">
         <Desha expression="thinking" size="md" />
-        <p className="mt-4 text-muted-foreground">بنجهزلك الدنيا...</p>
+        <p className="mt-4 font-semibold text-muted-foreground">{tr.home_loading}</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6">
       {/* Header: DESHA + greeting */}
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-end">
         <Desha expression={active ? "thinking" : "idle"} size="md" />
@@ -72,9 +74,9 @@ function HomePage() {
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="glass rounded-3xl p-5">
         <XPBar xp={profile.xp} />
         <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-          <Stat icon={<Gem className="text-accent" size={18} />} label="النقاط" value={profile.points} />
-          <Stat icon={<Flame className="text-gold" size={18} />} label="الستريك" value={profile.current_streak} />
-          <Stat icon={<Swords className="text-primary-glow" size={18} />} label="انتصارات" value={profile.total_completed} />
+          <Stat icon={<Gem className="text-accent" size={18} />} label={tr.home_points} value={profile.points} />
+          <Stat icon={<Flame className="text-gold" size={18} />} label={tr.home_streak} value={profile.current_streak} />
+          <Stat icon={<Swords className="text-primary-glow" size={18} />} label={tr.home_wins} value={profile.total_completed} />
         </div>
       </motion.div>
 
@@ -91,7 +93,7 @@ function HomePage() {
                 <h2 className="font-display mt-1 text-xl font-bold">{active.title}</h2>
                 <p className="mt-1 text-sm text-muted-foreground">{formatDuration(active.duration_minutes)}</p>
               </div>
-              <span className="text-3xl">⚔️</span>
+              <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/15 text-primary-glow"><ArrowLeft size={22} className="rtl:rotate-180" /></span>
             </div>
           </motion.div>
         </Link>
@@ -102,8 +104,8 @@ function HomePage() {
             whileTap={{ scale: 0.98 }}
             className="gradient-magic glow-strong rounded-3xl p-6 text-center"
           >
-            <p className="font-display text-2xl font-bold text-primary-foreground">ابدأ تحدي جديد ⚔️</p>
-            <p className="mt-1 text-sm text-primary-foreground/80">وريني إنت جدع ولا لأ</p>
+            <p className="font-display text-2xl font-bold text-primary-foreground">{tr.home_new_challenge}</p>
+            <p className="mt-1 text-sm text-primary-foreground/80">{tr.home_new_challenge_sub}</p>
           </motion.div>
         </Link>
       )}
@@ -114,7 +116,7 @@ function HomePage() {
           <div className="flex items-center gap-3">
             <Gift className="text-gold" size={22} />
             <div>
-              <p className="font-bold">الهدية اليومية</p>
+              <p className="font-bold">{tr.home_daily_reward}</p>
               <p className="text-xs text-muted-foreground">
                 {dailyAvailable ? desha.dailyReady() : desha.dailyClaimed()}
               </p>
@@ -125,7 +127,7 @@ function HomePage() {
             disabled={!dailyAvailable || claimDaily.isPending}
             className="rounded-xl bg-gold/20 px-4 py-2 text-sm font-bold text-gold transition-opacity disabled:opacity-40"
           >
-            {claimDaily.isPending ? "..." : dailyAvailable ? "استلم 🎁" : "اتاخد ✓"}
+            {claimDaily.isPending ? tr.common_moment : dailyAvailable ? tr.home_claim : tr.home_claimed}
           </button>
         </div>
         {dailyMsg && <p className="mt-3 text-sm font-semibold text-primary-glow">{dailyMsg}</p>}

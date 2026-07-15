@@ -7,6 +7,7 @@ import { activeChallengeQuery } from "@/lib/queries";
 import { desha, formatDuration } from "@/lib/game";
 import { Desha } from "@/components/game/Desha";
 import { DeshaSays } from "@/components/game/DeshaSays";
+import { useLang } from "@/contexts/LangContext";
 
 export const Route = createFileRoute("/_authenticated/challenge/new")({
   head: () => ({
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/challenge/new")({
 const DURATIONS = [15, 25, 45, 60, 90, 120, 180, 240];
 
 function NewChallengePage() {
+  const { tr, dir } = useLang();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: active } = useQuery(activeChallengeQuery);
@@ -69,7 +71,7 @@ function NewChallengePage() {
   const valid = title.trim().length >= 3;
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6" dir={dir}>
       <div className="flex flex-col items-center gap-4 md:flex-row md:items-end">
         <Desha expression="idle" size="md" />
         <div className="w-full flex-1">
@@ -87,13 +89,13 @@ function NewChallengePage() {
         }}
       >
         <div>
-          <label htmlFor="title" className="mb-1.5 block text-sm font-bold">التحدي إيه؟ *</label>
+          <label htmlFor="title" className="mb-1.5 block text-sm font-bold">{tr.challenge_what}</label>
           <input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             maxLength={120}
-            placeholder="مثلاً: أذاكر فصل كامل رياضة"
+            placeholder={tr.challenge_what_placeholder}
             className="w-full rounded-xl border border-input bg-muted/40 px-4 py-3 text-sm outline-none transition-shadow focus:ring-2 focus:ring-ring"
           />
         </div>

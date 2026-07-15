@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { ArrowLeft, Camera, Flame, ShieldCheck, Swords, Trophy } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Desha } from "@/components/game/Desha";
 import { MagicBackground } from "@/components/game/MagicBackground";
@@ -12,23 +13,12 @@ export const Route = createFileRoute("/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور." },
-      { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور." },
+      { title: "ديشا — حوّل أهدافك إلى انتصارات" },
+      { name: "description", content: "تحديات بوقت حقيقي، إثبات ذكي بالصور، ومستويات تكافئ التزامك." },
     ],
   }),
   component: LandingPage,
 });
-
-const FEATURES = [
-  { emoji: "⚔️", key: "landing_feat_challenges" as const },
-  { emoji: "📸", key: "landing_feat_proof" as const },
-  { emoji: "🔥", key: "landing_feat_xp" as const },
-];
-
-const itemAnim = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
-const itemTransition = (delay = 0) => ({ duration: 0.5, ease: "easeOut", delay } as const);
 
 function LandingPage() {
   const router = useRouter();
@@ -44,68 +34,60 @@ function LandingPage() {
     return () => sub.subscription.unsubscribe();
   }, [router]);
 
-  return (
-    <div className="relative flex min-h-dvh flex-col" dir={dir}>
-      <MagicBackground enhanced />
+  const features = [
+    { icon: Swords, title: tr.landing_feat_challenges, text: tr.challenge_duration },
+    { icon: Camera, title: tr.landing_feat_proof, text: tr.challenge_submit_title },
+    { icon: Flame, title: tr.landing_feat_xp, text: `${tr.home_streak} · ${tr.home_wins}` },
+  ];
 
-      {/* Top bar */}
-      <header className="relative z-10 flex items-center justify-between px-6 pt-5">
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
+  return (
+    <div className="relative min-h-dvh overflow-hidden" dir={dir}>
+      <MagicBackground enhanced />
+      <header className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-5 md:px-8">
+        <div className="flex items-center gap-3">
+          <span className="flex size-11 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg"><ShieldCheck size={22} /></span>
+          <div><p className="font-display text-lg font-black">DESHA</p><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Challenge arena</p></div>
         </div>
-        <LanguageSelector />
+        <div className="flex items-center gap-2"><ThemeToggle /><LanguageSelector /></div>
       </header>
 
-      {/* Hero */}
-      <main className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-10 pt-4">
-        <div className="flex w-full max-w-md flex-col items-center text-center">
-          {/* Logo / Avatar */}
-          <motion.div {...itemAnim} transition={itemTransition(0)} className="relative">
-            <div className="animate-pulse-glow absolute inset-0 rounded-full bg-primary/30 blur-2xl scale-110" />
-            <Desha expression="idle" size="xl" className="relative animate-desha-float" />
+      <main className="relative mx-auto flex w-full max-w-7xl flex-col gap-12 px-5 pb-16 pt-8 md:px-8 lg:flex-row lg:items-center lg:gap-16 lg:pt-14">
+        <section className="flex flex-1 flex-col items-start">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-bold text-primary-glow">
+            <Trophy size={15} /> {tr.landing_subtitle}
           </motion.div>
+          <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="font-display mt-6 max-w-3xl text-balance text-5xl font-black leading-[1.12] tracking-tight md:text-7xl">
+            {tr.landing_title}
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="mt-5 max-w-xl text-pretty text-base font-semibold leading-7 text-muted-foreground md:text-lg">
+            {tr.landing_tagline}
+          </motion.p>
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+            <Link to="/welcome" className="flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-base font-black text-primary-foreground shadow-xl transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              {tr.landing_start_now}<ArrowLeft size={19} className="rtl:rotate-180" />
+            </Link>
+            <span className="flex min-h-14 items-center justify-center rounded-2xl border border-border bg-card/70 px-6 text-sm font-bold text-muted-foreground backdrop-blur-xl">{tr.landing_feat_proof}</span>
+          </motion.div>
+        </section>
 
-          {/* Title */}
-          <motion.div {...itemAnim} transition={itemTransition(0.1)} className="mt-5">
-            <h1 className="font-display text-6xl font-bold text-glow md:text-7xl">
-              {tr.landing_title}
-            </h1>
-            <p className="mt-2 text-lg font-bold text-primary-glow">
-              {tr.landing_subtitle}
-            </p>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground leading-relaxed">
-              {tr.landing_tagline}
-            </p>
-          </motion.div>
-
-          {/* Single primary CTA → welcome chooser */}
-          <motion.div {...itemAnim} transition={itemTransition(0.2)} className="mt-8 w-full">
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-              <Link
-                to="/welcome"
-                className="gradient-magic glow-strong flex w-full items-center justify-center rounded-2xl px-6 py-4 text-xl font-black text-primary-foreground shadow-lg"
-              >
-                {tr.landing_start_now} 🚀
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* Feature pills */}
-          <motion.div {...itemAnim} transition={itemTransition(0.3)} className="mt-10 grid w-full grid-cols-3 gap-3">
-            {FEATURES.map((f) => (
-              <div key={f.key} className="glass rounded-2xl px-2 py-4 text-center">
-                <div className="text-2xl">{f.emoji}</div>
-                <div className="mt-1.5 text-[11px] font-semibold leading-tight text-muted-foreground">
-                  {tr[f.key]}
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+        <motion.section initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 }} className="relative flex flex-1 items-center justify-center" aria-label="DESHA challenge preview">
+          <div className="glass-strong relative w-full max-w-md overflow-hidden rounded-[2rem] p-6 md:p-8">
+            <div className="flex items-center justify-between"><span className="rounded-full bg-accent/15 px-3 py-1.5 text-xs font-black text-gold">LEVEL 07</span><span className="text-xs font-bold text-muted-foreground">1,240 XP</span></div>
+            <div className="mt-5 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full w-3/4 rounded-full bg-primary" /></div>
+            <div className="mt-6 flex justify-center"><Desha expression="idle" size="lg" className="animate-desha-float" /></div>
+            <div className="mt-5 rounded-2xl border border-border/70 bg-muted/55 p-4 text-center"><p className="font-display text-lg font-black">{tr.home_new_challenge}</p><p className="mt-1 text-sm text-muted-foreground">{tr.home_new_challenge_sub}</p></div>
+          </div>
+        </motion.section>
       </main>
 
-      {/* Subtle bottom glow line */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+      <section className="relative mx-auto grid w-full max-w-7xl gap-3 px-5 pb-10 md:grid-cols-3 md:px-8">
+        {features.map(({ icon: Icon, title, text }) => (
+          <article key={title} className="glass flex items-center gap-4 rounded-3xl p-5">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/12 text-primary-glow"><Icon size={21} /></span>
+            <div><h2 className="font-bold">{title}</h2><p className="mt-1 text-sm text-muted-foreground">{text}</p></div>
+          </article>
+        ))}
+      </section>
     </div>
   );
 }
