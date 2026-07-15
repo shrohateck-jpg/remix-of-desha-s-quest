@@ -40,6 +40,8 @@ export interface Translations {
   landing_feat_challenges: string;
   landing_feat_proof: string;
   landing_feat_xp: string;
+  welcome_title: string;
+  welcome_sub: string;
 
   // Auth
   auth_sign_in_title: string;
@@ -182,6 +184,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "تحديات بوقت حقيقي",
     landing_feat_proof: "إثبات بالصور",
     landing_feat_xp: "XP وستريكات",
+    welcome_title: "ابدأ رحلتك",
+    welcome_sub: "اختار طريقتك للدخول",
 
     auth_sign_in_title: "سجل دخول",
     auth_sign_up_title: "اعمل حساب",
@@ -310,6 +314,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "تحديات في وقت حقيقي",
     landing_feat_proof: "إثبات بالصور",
     landing_feat_xp: "XP ومتتاليات",
+    welcome_title: "ابدأ رحلتك",
+    welcome_sub: "اختر طريقة الدخول",
 
     auth_sign_in_title: "تسجيل الدخول",
     auth_sign_up_title: "إنشاء حساب",
@@ -438,6 +444,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Real-time challenges",
     landing_feat_proof: "Photo proof",
     landing_feat_xp: "XP & streaks",
+    welcome_title: "Begin Your Journey",
+    welcome_sub: "Choose how you want to enter",
 
     auth_sign_in_title: "Sign In",
     auth_sign_up_title: "Create Account",
@@ -566,6 +574,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Défis en temps réel",
     landing_feat_proof: "Preuve photo",
     landing_feat_xp: "XP & séries",
+    welcome_title: "Commence ton aventure",
+    welcome_sub: "Choisis comment entrer",
 
     auth_sign_in_title: "Connexion",
     auth_sign_up_title: "Créer un compte",
@@ -694,6 +704,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Desafíos en tiempo real",
     landing_feat_proof: "Prueba con fotos",
     landing_feat_xp: "XP y rachas",
+    welcome_title: "Comienza tu aventura",
+    welcome_sub: "Elige cómo entrar",
 
     auth_sign_in_title: "Iniciar sesión",
     auth_sign_up_title: "Crear cuenta",
@@ -822,6 +834,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Echtzeit-Challenges",
     landing_feat_proof: "Foto-Beweis",
     landing_feat_xp: "XP & Serien",
+    welcome_title: "Beginne dein Abenteuer",
+    welcome_sub: "Wähle deinen Einstieg",
 
     auth_sign_in_title: "Anmelden",
     auth_sign_up_title: "Konto erstellen",
@@ -950,6 +964,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Sfide in tempo reale",
     landing_feat_proof: "Prova fotografica",
     landing_feat_xp: "XP e serie",
+    welcome_title: "Inizia la tua avventura",
+    welcome_sub: "Scegli come entrare",
 
     auth_sign_in_title: "Accedi",
     auth_sign_up_title: "Crea account",
@@ -1078,6 +1094,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Desafios em tempo real",
     landing_feat_proof: "Prova fotográfica",
     landing_feat_xp: "XP e sequências",
+    welcome_title: "Comece sua jornada",
+    welcome_sub: "Escolha como entrar",
 
     auth_sign_in_title: "Entrar",
     auth_sign_up_title: "Criar conta",
@@ -1206,6 +1224,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Gerçek zamanlı meydan okumalar",
     landing_feat_proof: "Fotoğraf kanıtı",
     landing_feat_xp: "XP ve seriler",
+    welcome_title: "Yolculuğuna başla",
+    welcome_sub: "Nasıl giriş yapacağını seç",
 
     auth_sign_in_title: "Giriş yap",
     auth_sign_up_title: "Hesap oluştur",
@@ -1334,6 +1354,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Испытания в реальном времени",
     landing_feat_proof: "Фотодоказательство",
     landing_feat_xp: "XP и серии",
+    welcome_title: "Начни путешествие",
+    welcome_sub: "Выбери способ входа",
 
     auth_sign_in_title: "Вход",
     auth_sign_up_title: "Создать аккаунт",
@@ -1462,6 +1484,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "リアルタイムチャレンジ",
     landing_feat_proof: "写真による証明",
     landing_feat_xp: "XP＆ストリーク",
+    welcome_title: "旅を始めよう",
+    welcome_sub: "入る方法を選んでください",
 
     auth_sign_in_title: "ログイン",
     auth_sign_up_title: "アカウント作成",
@@ -1590,6 +1614,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "실시간 도전",
     landing_feat_proof: "사진 증명",
     landing_feat_xp: "XP & 연속 달성",
+    welcome_title: "여정을 시작하세요",
+    welcome_sub: "입장 방법을 선택하세요",
 
     auth_sign_in_title: "로그인",
     auth_sign_up_title: "계정 만들기",
@@ -1718,6 +1744,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "实时挑战",
     landing_feat_proof: "照片证明",
     landing_feat_xp: "经验值和连击",
+    welcome_title: "开启旅程",
+    welcome_sub: "选择进入方式",
 
     auth_sign_in_title: "登录",
     auth_sign_up_title: "创建账户",
@@ -1846,6 +1874,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "रियल-टाइम चुनौतियाँ",
     landing_feat_proof: "फोटो प्रमाण",
     landing_feat_xp: "XP और स्ट्रीक्स",
+    welcome_title: "अपनी यात्रा शुरू करें",
+    welcome_sub: "प्रवेश का तरीका चुनें",
 
     auth_sign_in_title: "साइन इन",
     auth_sign_up_title: "खाता बनाएं",
@@ -1974,6 +2004,8 @@ export const t: TranslationMap = {
     landing_feat_challenges: "Tantangan real-time",
     landing_feat_proof: "Bukti foto",
     landing_feat_xp: "XP & streak",
+    welcome_title: "Mulai perjalananmu",
+    welcome_sub: "Pilih cara masuk",
 
     auth_sign_in_title: "Masuk",
     auth_sign_up_title: "Buat akun",
