@@ -78,37 +78,16 @@ function LandingPage() {
             </p>
           </motion.div>
 
-          {/* CTA Buttons */}
-          <motion.div {...itemAnim} transition={itemTransition(0.2)} className="mt-8 flex w-full flex-col gap-3">
-            {/* Primary */}
+          {/* Single primary CTA → welcome chooser */}
+          <motion.div {...itemAnim} transition={itemTransition(0.2)} className="mt-8 w-full">
             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
               <Link
-                to="/login"
+                to="/welcome"
                 className="gradient-magic glow-strong flex w-full items-center justify-center rounded-2xl px-6 py-4 text-xl font-black text-primary-foreground shadow-lg"
               >
                 {tr.landing_start_now} 🚀
               </Link>
             </motion.div>
-
-            {/* Secondary row */}
-            <div className="grid grid-cols-2 gap-3">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  to="/login"
-                  className="glass flex w-full items-center justify-center rounded-2xl px-4 py-3 text-sm font-bold text-foreground transition-all hover:border-primary/50"
-                >
-                  {tr.landing_sign_in}
-                </Link>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  to="/signup"
-                  className="glass flex w-full items-center justify-center rounded-2xl px-4 py-3 text-sm font-bold text-primary-glow transition-all hover:border-primary/50"
-                >
-                  {tr.landing_sign_up}
-                </Link>
-              </motion.div>
-            </div>
           </motion.div>
 
           {/* Feature pills */}
