@@ -173,9 +173,9 @@ type TranslationMap = Record<LangCode, Translations>;
 
 export const t: TranslationMap = {
   "ar-eg": {
-    landing_title: "ديشا",
-    landing_subtitle: "لعبة الإنتاجية الشريرة 😈",
-    landing_tagline: "حوّل مهامك لتحديات، وخلّي ديشا يحكم عليك بالصور.",
+    landing_title: "🔥 اتحدى نفسك 🔥",
+    landing_subtitle: "لعبة التحدي الشريرة 😈",
+    landing_tagline: "اختبر معلوماتك واستمتع بأقوى تجربة تحدي.",
     landing_start_now: "ابدأ دلوقتي",
     landing_sign_in: "سجل دخول",
     landing_sign_up: "اعمل حساب",
@@ -301,9 +301,9 @@ export const t: TranslationMap = {
   },
 
   "ar": {
-    landing_title: "ديشا",
-    landing_subtitle: "لعبة الإنتاجية الشريرة 😈",
-    landing_tagline: "حوّل مهامك إلى تحديات، ودع ديشا يحكم عليك بالصور.",
+    landing_title: "🔥 تحدَّ نفسك 🔥",
+    landing_subtitle: "لعبة التحدي 😈",
+    landing_tagline: "اختبر معلوماتك واستمتع بأقوى تجربة تحدٍّ.",
     landing_start_now: "ابدأ الآن",
     landing_sign_in: "تسجيل الدخول",
     landing_sign_up: "إنشاء حساب",
@@ -429,9 +429,9 @@ export const t: TranslationMap = {
   },
 
   "en": {
-    landing_title: "Desha",
-    landing_subtitle: "The Evil Productivity Game 😈",
-    landing_tagline: "Turn your tasks into challenges. Let Desha judge you.",
+    landing_title: "🔥 Challenge Yourself 🔥",
+    landing_subtitle: "The ultimate challenge game 😈",
+    landing_tagline: "Test your knowledge and enjoy the ultimate challenge experience.",
     landing_start_now: "Start Now",
     landing_sign_in: "Sign In",
     landing_sign_up: "Create Account",
@@ -557,9 +557,9 @@ export const t: TranslationMap = {
   },
 
   "fr": {
-    landing_title: "Desha",
-    landing_subtitle: "Le Jeu de Productivité Maléfique 😈",
-    landing_tagline: "Transforme tes tâches en défis. Laisse Desha te juger.",
+    landing_title: "🔥 Défie-toi 🔥",
+    landing_subtitle: "Le jeu de défis ultime 😈",
+    landing_tagline: "Teste tes connaissances et vis l'expérience de défi ultime.",
     landing_start_now: "Commencer",
     landing_sign_in: "Se connecter",
     landing_sign_up: "Créer un compte",
@@ -685,9 +685,9 @@ export const t: TranslationMap = {
   },
 
   "es": {
-    landing_title: "Desha",
-    landing_subtitle: "El Juego de Productividad Malvado 😈",
-    landing_tagline: "Convierte tus tareas en desafíos. Deja que Desha te juzgue.",
+    landing_title: "🔥 Desafíate 🔥",
+    landing_subtitle: "El juego de desafío definitivo 😈",
+    landing_tagline: "Pon a prueba tus conocimientos y disfruta la mejor experiencia.",
     landing_start_now: "Empezar ahora",
     landing_sign_in: "Iniciar sesión",
     landing_sign_up: "Crear cuenta",
@@ -813,9 +813,9 @@ export const t: TranslationMap = {
   },
 
   "de": {
-    landing_title: "Desha",
-    landing_subtitle: "Das böse Produktivitätsspiel 😈",
-    landing_tagline: "Mach deine Aufgaben zu Herausforderungen. Lass Desha urteilen.",
+    landing_title: "🔥 Fordere dich heraus 🔥",
+    landing_subtitle: "Das ultimative Challenge-Spiel 😈",
+    landing_tagline: "Teste dein Wissen und erlebe die ultimative Challenge.",
     landing_start_now: "Jetzt starten",
     landing_sign_in: "Anmelden",
     landing_sign_up: "Konto erstellen",
@@ -941,9 +941,9 @@ export const t: TranslationMap = {
   },
 
   "it": {
-    landing_title: "Desha",
-    landing_subtitle: "Il Gioco di Produttività Malvagio 😈",
-    landing_tagline: "Trasforma i tuoi compiti in sfide. Lascia che Desha ti giudichi.",
+    landing_title: "🔥 Sfida te stesso 🔥",
+    landing_subtitle: "Il gioco di sfide definitivo 😈",
+    landing_tagline: "Metti alla prova le tue conoscenze nella sfida più potente.",
     landing_start_now: "Inizia ora",
     landing_sign_in: "Accedi",
     landing_sign_up: "Crea account",
@@ -1069,9 +1069,9 @@ export const t: TranslationMap = {
   },
 
   "pt": {
-    landing_title: "Desha",
-    landing_subtitle: "O Jogo de Produtividade Maligno 😈",
-    landing_tagline: "Transforme suas tarefas em desafios. Deixe Desha te julgar.",
+    landing_title: "🔥 Desafie-se 🔥",
+    landing_subtitle: "O jogo de desafios definitivo 😈",
+    landing_tagline: "Teste seus conhecimentos e viva a maior experiência de desafio.",
     landing_start_now: "Começar agora",
     landing_sign_in: "Entrar",
     landing_sign_up: "Criar conta",
@@ -1197,9 +1197,9 @@ export const t: TranslationMap = {
   },
 
   "tr": {
-    landing_title: "Desha",
-    landing_subtitle: "Kötü Üretkenlik Oyunu 😈",
-    landing_tagline: "Görevlerini meydan okumalara dönüştür. Desha seni yargılasın.",
+    landing_title: "🔥 Kendine Meydan Oku 🔥",
+    landing_subtitle: "En büyük meydan okuma oyunu 😈",
+    landing_tagline: "Bilgini test et ve en güçlü meydan okuma deneyimini yaşa.",
     landing_start_now: "Şimdi başla",
     landing_sign_in: "Giriş yap",
     landing_sign_up: "Hesap oluştur",
@@ -1325,9 +1325,9 @@ export const t: TranslationMap = {
   },
 
   "ru": {
-    landing_title: "Деша",
-    landing_subtitle: "Злая игра продуктивности 😈",
-    landing_tagline: "Превращай задачи в испытания. Пусть Деша тебя рассудит.",
+    landing_title: "🔥 Брось себе вызов 🔥",
+    landing_subtitle: "Лучшая игра-испытание 😈",
+    landing_tagline: "Проверь свои знания и получи мощнейший опыт испытаний.",
     landing_start_now: "Начать сейчас",
     landing_sign_in: "Войти",
     landing_sign_up: "Создать аккаунт",
@@ -1453,9 +1453,9 @@ export const t: TranslationMap = {
   },
 
   "ja": {
-    landing_title: "デシャ",
-    landing_subtitle: "邪悪な生産性ゲーム 😈",
-    landing_tagline: "タスクをチャレンジに変えよう。デシャに審判してもらおう。",
+    landing_title: "🔥 自分に挑戦 🔥",
+    landing_subtitle: "究極のチャレンジゲーム 😈",
+    landing_tagline: "知識を試し、最高のチャレンジ体験を楽しもう。",
     landing_start_now: "今すぐ始める",
     landing_sign_in: "ログイン",
     landing_sign_up: "アカウント作成",
@@ -1581,9 +1581,9 @@ export const t: TranslationMap = {
   },
 
   "ko": {
-    landing_title: "데샤",
-    landing_subtitle: "악마의 생산성 게임 😈",
-    landing_tagline: "할 일을 도전 과제로 바꾸세요. 데샤가 판단합니다.",
+    landing_title: "🔥 자신에게 도전하라 🔥",
+    landing_subtitle: "궁극의 챌린지 게임 😈",
+    landing_tagline: "지식을 시험하고 최고의 챌린지를 경험하세요.",
     landing_start_now: "지금 시작",
     landing_sign_in: "로그인",
     landing_sign_up: "계정 만들기",
@@ -1709,9 +1709,9 @@ export const t: TranslationMap = {
   },
 
   "zh": {
-    landing_title: "德沙",
-    landing_subtitle: "邪恶的生产力游戏 😈",
-    landing_tagline: "将任务变成挑战，让德沙来评判你。",
+    landing_title: "🔥 挑战自我 🔥",
+    landing_subtitle: "终极挑战游戏 😈",
+    landing_tagline: "测试你的知识，享受最强的挑战体验。",
     landing_start_now: "立即开始",
     landing_sign_in: "登录",
     landing_sign_up: "创建账户",
@@ -1837,9 +1837,9 @@ export const t: TranslationMap = {
   },
 
   "hi": {
-    landing_title: "देशा",
-    landing_subtitle: "बुराई उत्पादकता खेल 😈",
-    landing_tagline: "अपने कार्यों को चुनौतियों में बदलें। देशा को निर्णायक बनने दें।",
+    landing_title: "🔥 खुद को चुनौती दो 🔥",
+    landing_subtitle: "अंतिम चुनौती खेल 😈",
+    landing_tagline: "अपने ज्ञान को परखें और सबसे बड़ा चुनौती अनुभव पाएं।",
     landing_start_now: "अभी शुरू करें",
     landing_sign_in: "साइन इन करें",
     landing_sign_up: "खाता बनाएं",
@@ -1965,9 +1965,9 @@ export const t: TranslationMap = {
   },
 
   "id": {
-    landing_title: "Desha",
-    landing_subtitle: "Game Produktivitas Jahat 😈",
-    landing_tagline: "Ubah tugasmu menjadi tantangan. Biarkan Desha menilaimu.",
+    landing_title: "🔥 Tantang Dirimu 🔥",
+    landing_subtitle: "Game tantangan terbaik 😈",
+    landing_tagline: "Uji pengetahuanmu dan nikmati pengalaman tantangan terhebat.",
     landing_start_now: "Mulai sekarang",
     landing_sign_in: "Masuk",
     landing_sign_up: "Buat akun",
