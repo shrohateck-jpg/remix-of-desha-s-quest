@@ -1,8 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, ArrowLeft, ArrowRight } from "lucide-react";
-import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 import { MagicBackground } from "@/components/game/MagicBackground";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
@@ -33,16 +32,19 @@ function SignupPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // If already logged in, send home
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) router.navigate({ to: "/home", replace: true });
+    });
+  }, [router]);
+
+  const callbackUrl = `${window.location.origin}/auth/callback`;
+
   const signUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirm) {
-      setError(tr.auth_error_passwords_mismatch);
-      return;
-    }
-    if (password.length < 6) {
-      setError(tr.auth_error_weak_password);
-      return;
-    }
+    if (password !== confirm) { setError(tr.auth_error_passwords_mismatch); return; }
+    if (password.length < 6) { setError(tr.auth_error_weak_password); return; }
     setLoading(true);
     setError(null);
 
@@ -56,11 +58,10 @@ function SignupPage() {
       setError(
         err.message.toLowerCase().includes("already")
           ? tr.auth_error_email_taken
-          : tr.auth_error_generic
+          : tr.auth_error_generic,
       );
       setLoading(false);
     } else if (data.session) {
-      // Auto-confirmed (e.g. dev mode)
       router.navigate({ to: "/home" });
     } else {
       setStep("check_email");
@@ -70,13 +71,15 @@ function SignupPage() {
   const signInGoogle = async () => {
     setGoogleLoading(true);
     setError(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: callbackUrl },
     });
-    if (result.error) {
+    if (err) {
       setError(tr.auth_error_generic);
       setGoogleLoading(false);
     }
+    // On success Supabase redirects the browser
   };
 
   if (step === "check_email") {
@@ -107,7 +110,7 @@ function SignupPage() {
       <MagicBackground />
 
       {/* Top bar */}
-      <div className="absolute top-5 inset-x-6 flex items-center justify-between">
+      <div className="absolute inset-x-6 top-5 flex items-center justify-between">
         <Link
           to="/"
           className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
@@ -124,7 +127,7 @@ function SignupPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.45 }}
         className="glass-strong w-full max-w-sm rounded-3xl p-8"
       >
         <div className="mb-6 text-center">

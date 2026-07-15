@@ -1,8 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, ArrowLeft, ArrowRight } from "lucide-react";
-import { lovable } from "@/integrations/lovable/index";
 import { supabase } from "@/integrations/supabase/client";
 import { MagicBackground } from "@/components/game/MagicBackground";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
@@ -27,6 +26,15 @@ function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // If the user is already logged in, send them home
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) router.navigate({ to: "/home", replace: true });
+    });
+  }, [router]);
+
+  const callbackUrl = `${window.location.origin}/auth/callback`;
+
   const signInEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return;
@@ -38,7 +46,7 @@ function LoginPage() {
         err.message.toLowerCase().includes("invalid") ||
         err.message.toLowerCase().includes("credentials")
           ? tr.auth_error_credentials
-          : tr.auth_error_generic
+          : tr.auth_error_generic,
       );
       setLoading(false);
     } else {
@@ -49,13 +57,15 @@ function LoginPage() {
   const signInGoogle = async () => {
     setGoogleLoading(true);
     setError(null);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+    const { error: err } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: callbackUrl },
     });
-    if (result.error) {
+    if (err) {
       setError(tr.auth_error_generic);
       setGoogleLoading(false);
     }
+    // On success Supabase redirects the browser — no further action needed
   };
 
   return (
@@ -63,7 +73,7 @@ function LoginPage() {
       <MagicBackground />
 
       {/* Top bar */}
-      <div className="absolute top-5 inset-x-6 flex items-center justify-between">
+      <div className="absolute inset-x-6 top-5 flex items-center justify-between">
         <Link
           to="/"
           className="flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
@@ -80,7 +90,7 @@ function LoginPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.45 }}
         className="glass-strong w-full max-w-sm rounded-3xl p-8"
       >
         {/* Header */}
