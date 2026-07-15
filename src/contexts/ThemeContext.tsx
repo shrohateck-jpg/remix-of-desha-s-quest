@@ -1,7 +1,24 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 export type Theme = "dark" | "light";
 const STORAGE_KEY = "desha_theme";
+
+function initTheme(): Theme {
+  if (typeof window === "undefined") return "dark";
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "light" || saved === "dark") return saved;
+  } catch {}
+  return "dark";
+}
 
 interface ThemeContextValue {
   theme: Theme;
@@ -16,33 +33,31 @@ const ThemeContext = createContext<ThemeContextValue>({
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>(initTheme);
 
-  useEffect(() => {
+  const setTheme = useCallback((next: Theme) => {
+    setThemeState(next);
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
-      if (saved === "light" || saved === "dark") setThemeState(saved);
+      localStorage.setItem(STORAGE_KEY, next);
     } catch {}
   }, []);
 
-  const setTheme = (t: Theme) => {
-    setThemeState(t);
-    try { localStorage.setItem(STORAGE_KEY, t); } catch {}
-  };
-
-  const toggle = () => setTheme(theme === "dark" ? "light" : "dark");
+  const toggle = useCallback(
+    () => setTheme(theme === "dark" ? "light" : "dark"),
+    [theme, setTheme],
+  );
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove("dark", "light");
-    root.classList.add(theme);
+    document.documentElement.classList.remove("dark", "light");
+    document.documentElement.classList.add(theme);
   }, [theme]);
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggle }}>
-      {children}
-    </ThemeContext.Provider>
+  const value = useMemo<ThemeContextValue>(
+    () => ({ theme, setTheme, toggle }),
+    [theme, setTheme, toggle],
   );
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {
