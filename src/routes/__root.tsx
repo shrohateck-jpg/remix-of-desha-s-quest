@@ -8,9 +8,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { LangProvider } from "@/contexts/LangContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AudioProvider } from "@/contexts/AudioContext";
 
 function NotFoundComponent() {
   return (
@@ -46,10 +48,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="mt-2 text-sm text-muted-foreground">حصلت مشكلة عندنا. جرب تعمل تحديث أو ارجع للرئيسية.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
+            onClick={() => { router.invalidate(); reset(); }}
             className="gradient-magic inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-bold text-primary-foreground"
           >
             جرب تاني
@@ -72,23 +71,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
+      { name: "description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور." },
       { name: "author", content: "DESHA" },
       { property: "og:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
+      { property: "og:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#17111f" },
-      { name: "twitter:title", content: "ديشا — لعبة الإنتاجية الشريرة 😈" },
-      { name: "twitter:description", content: "حوّل مهامك لتحديات، وخلي ديشا يحكم عليك بالصور. اكسب XP ونقاط وستريكات — أو اخسر قدامه." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/o4czYmHwtDbZ7OW5bLlSP3diOxZ2/social-images/social-1783874774306-ChatGPT_Image_Jul_12,_2026,_07_45_22_PM.webp" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -106,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className="dark">
       <head>
         <HeadContent />
       </head>
@@ -122,9 +115,14 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <LangProvider>
+        <AudioProvider>
+          <QueryClientProvider client={queryClient}>
+            <Outlet />
+          </QueryClientProvider>
+        </AudioProvider>
+      </LangProvider>
+    </ThemeProvider>
   );
 }

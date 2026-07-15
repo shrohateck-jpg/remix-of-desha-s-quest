@@ -1,0 +1,2 @@
+- [Desha redesign](desha-redesign.md) — ground-up redesign: new landing/login/signup routes, 15-language i18n via LangContext, dark/light ThemeContext, AudioContext, multilingual AI prompt.
+- [Port override](desha-port.md) — Lovable config forces port 8080; override via `vite: { server: { port: 5000 } }` in defineConfig to satisfy Replit webview.

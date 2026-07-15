@@ -3,10 +3,12 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant light (&:is(.light *));
 
 /*
  * DESHA design system — Dark Fantasy / Glassmorphism
  * Purple magic + blue glow. All colors oklch.
+ * Supports dark (default) and light themes via .dark/.light on <html>.
  */
 
 @theme inline {
@@ -47,7 +49,9 @@
   --font-display: "Changa", "Cairo", sans-serif;
 }
 
-:root {
+/* ===== DARK THEME (default) ===== */
+:root,
+.dark {
   --radius: 1.1rem;
   --background: oklch(0.14 0.045 300);
   --foreground: oklch(0.94 0.02 300);
@@ -83,6 +87,43 @@
   --shadow-card: 0 12px 40px oklch(0.08 0.03 300 / 60%);
 }
 
+/* ===== LIGHT THEME ===== */
+.light {
+  --radius: 1.1rem;
+  --background: oklch(0.97 0.008 290);
+  --foreground: oklch(0.18 0.045 300);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.045 300);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.045 300);
+  --primary: oklch(0.52 0.26 300);
+  --primary-foreground: oklch(0.99 0.005 300);
+  --primary-glow: oklch(0.45 0.22 300);
+  --secondary: oklch(0.48 0.2 255);
+  --secondary-foreground: oklch(0.99 0.005 255);
+  --muted: oklch(0.92 0.015 295);
+  --muted-foreground: oklch(0.45 0.04 300);
+  --accent: oklch(0.52 0.19 250);
+  --accent-foreground: oklch(0.99 0.005 250);
+  --destructive: oklch(0.55 0.23 25);
+  --destructive-foreground: oklch(0.99 0.005 25);
+  --success: oklch(0.55 0.19 155);
+  --success-foreground: oklch(0.99 0.005 155);
+  --gold: oklch(0.65 0.16 75);
+  --border: oklch(0.82 0.02 295 / 80%);
+  --input: oklch(0.88 0.015 295 / 90%);
+  --ring: oklch(0.52 0.22 300);
+  --sidebar: oklch(0.98 0.006 292 / 92%);
+  --sidebar-foreground: oklch(0.18 0.045 300);
+
+  --gradient-magic: linear-gradient(135deg, oklch(0.52 0.26 300), oklch(0.48 0.22 260));
+  --gradient-victory: linear-gradient(135deg, oklch(0.55 0.19 155), oklch(0.52 0.19 250));
+  --gradient-defeat: linear-gradient(135deg, oklch(0.52 0.2 25), oklch(0.48 0.18 320));
+  --shadow-glow: 0 0 40px oklch(0.52 0.26 300 / 25%), 0 0 90px oklch(0.48 0.2 255 / 10%);
+  --shadow-glow-strong: 0 0 30px oklch(0.52 0.24 300 / 40%), 0 0 100px oklch(0.48 0.2 255 / 20%);
+  --shadow-card: 0 4px 24px oklch(0.18 0.03 300 / 12%);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -102,18 +143,29 @@
       radial-gradient(ellipse 40% 30% at 5% 90%, oklch(0.3 0.13 320 / 25%), transparent);
     background-attachment: fixed;
     min-height: 100dvh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .light body {
+    background-image:
+      radial-gradient(ellipse 70% 45% at 50% -5%, oklch(0.75 0.08 300 / 30%), transparent),
+      radial-gradient(ellipse 45% 35% at 90% 110%, oklch(0.72 0.07 255 / 25%), transparent),
+      radial-gradient(ellipse 40% 30% at 5% 90%, oklch(0.72 0.08 320 / 20%), transparent);
   }
 
   ::selection {
-    background: oklch(0.58 0.26 300 / 45%);
+    background: oklch(0.58 0.26 300 / 35%);
   }
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.4 0.1 300 / 60%);
+    background: oklch(0.4 0.1 300 / 50%);
     border-radius: 999px;
+  }
+  .light ::-webkit-scrollbar-thumb {
+    background: oklch(0.6 0.1 300 / 40%);
   }
 }
 
@@ -126,12 +178,23 @@
   box-shadow: var(--shadow-card);
 }
 
+.light .glass {
+  background: oklch(1 0 0 / 72%);
+  border: 1px solid oklch(0.8 0.04 295 / 60%);
+}
+
 @utility glass-strong {
   background: oklch(0.2 0.06 298 / 78%);
   backdrop-filter: blur(26px) saturate(1.4);
   -webkit-backdrop-filter: blur(26px) saturate(1.4);
   border: 1px solid oklch(0.55 0.12 300 / 30%);
   box-shadow: var(--shadow-card), inset 0 1px 0 oklch(0.9 0.05 300 / 8%);
+}
+
+.light .glass-strong {
+  background: oklch(1 0 0 / 88%);
+  border: 1px solid oklch(0.8 0.04 295 / 50%);
+  box-shadow: var(--shadow-card);
 }
 
 @utility glow {
@@ -146,12 +209,38 @@
   text-shadow: 0 0 22px oklch(0.62 0.24 300 / 70%);
 }
 
+.light .text-glow {
+  text-shadow: 0 0 18px oklch(0.52 0.22 300 / 50%);
+}
+
 @utility gradient-magic {
   background-image: var(--gradient-magic);
 }
 
 @utility font-display {
   font-family: var(--font-display);
+}
+
+/* ===== Auth input ===== */
+@utility auth-input {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-input);
+  background: oklch(0.28 0.05 298 / 50%);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  color: var(--color-foreground);
+}
+
+.light .auth-input {
+  background: oklch(0.96 0.01 295 / 80%);
+}
+
+.auth-input:focus {
+  box-shadow: 0 0 0 2px var(--color-ring);
+  border-color: var(--color-ring);
 }
 
 /* ===== Animations ===== */
@@ -164,20 +253,24 @@
   50% { opacity: 1; transform: scale(1.06); }
 }
 @keyframes fog-drift {
-  0% { transform: translateX(-8%) translateY(0); opacity: 0.25; }
-  50% { transform: translateX(8%) translateY(-4%); opacity: 0.45; }
+  0%   { transform: translateX(-8%) translateY(0); opacity: 0.25; }
+  50%  { transform: translateX(8%) translateY(-4%); opacity: 0.45; }
   100% { transform: translateX(-8%) translateY(0); opacity: 0.25; }
 }
 @keyframes sparkle {
   0%, 100% { opacity: 0; transform: scale(0.4); }
-  50% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1); }
 }
 @keyframes scan-line {
-  0% { top: 0%; }
+  0%   { top: 0%; }
   100% { top: 100%; }
 }
 @keyframes ring-spin {
   to { transform: rotate(360deg); }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @utility animate-desha-float {
@@ -198,6 +291,9 @@
 @utility animate-ring-spin {
   animation: ring-spin 9s linear infinite;
 }
+@utility animate-slide-up {
+  animation: slide-up 0.4s ease-out both;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .animate-desha-float,
@@ -205,7 +301,8 @@
   .animate-fog,
   .animate-sparkle,
   .animate-scan,
-  .animate-ring-spin {
+  .animate-ring-spin,
+  .animate-slide-up {
     animation: none;
   }
 }

@@ -11,24 +11,29 @@ import {
   HelpCircle,
   LogOut,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { MagicBackground } from "@/components/game/MagicBackground";
-
-const NAV = [
-  { to: "/home", label: "الرئيسية", icon: Home },
-  { to: "/challenge/active", label: "التحدي", icon: Swords },
-  { to: "/history", label: "التاريخ", icon: ScrollText },
-  { to: "/calendar", label: "التقويم", icon: CalendarDays },
-  { to: "/stats", label: "الإحصائيات", icon: BarChart3 },
-  { to: "/profile", label: "البروفايل", icon: User },
-  { to: "/how-to-play", label: "إزاي ألعب؟", icon: HelpCircle },
-  { to: "/settings", label: "الإعدادات", icon: Settings },
-] as const;
-
-const MOBILE_NAV = NAV.slice(0, 5);
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { useLang } from "@/contexts/LangContext";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const { tr, dir } = useLang();
+
+  const NAV = [
+    { to: "/home", label: tr.nav_home, icon: Home },
+    { to: "/challenge/active", label: tr.nav_challenge, icon: Swords },
+    { to: "/history", label: tr.nav_history, icon: ScrollText },
+    { to: "/calendar", label: tr.nav_calendar, icon: CalendarDays },
+    { to: "/stats", label: tr.nav_stats, icon: BarChart3 },
+    { to: "/profile", label: tr.nav_profile, icon: User },
+    { to: "/how-to-play", label: tr.nav_how_to_play, icon: HelpCircle },
+    { to: "/settings", label: tr.nav_settings, icon: Settings },
+  ] as const;
+
+  const MOBILE_NAV = NAV.slice(0, 5);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -36,14 +41,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="min-h-dvh" dir="rtl">
+    <div className="min-h-dvh" dir={dir}>
       <MagicBackground />
 
-      {/* Desktop sidebar */}
-      <aside className="glass-strong fixed inset-y-4 right-4 z-40 hidden w-60 flex-col rounded-3xl p-4 md:flex">
+      {/* Desktop sidebar — end-aligned so it works for both LTR and RTL */}
+      <aside className="glass-strong fixed inset-y-4 end-4 z-40 hidden w-60 flex-col rounded-3xl p-4 md:flex">
         <Link to="/home" className="mb-6 flex items-center gap-2 px-2 pt-2">
           <span className="font-display text-2xl font-bold text-glow">ديشا 😈</span>
         </Link>
+
         <nav className="flex flex-1 flex-col gap-1">
           {NAV.map(({ to, label, icon: Icon }) => (
             <Link
@@ -52,23 +58,36 @@ export function AppShell({ children }: { children: ReactNode }) {
               className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-all hover:bg-primary/15 hover:text-foreground [&.active]:gradient-magic [&.active]:text-primary-foreground [&.active]:glow"
               activeProps={{ className: "active" }}
             >
-              <Icon className="h-4.5 w-4.5" size={18} />
+              <Icon size={18} />
               {label}
             </Link>
           ))}
         </nav>
+
+        <div className="mt-4 flex items-center gap-2 border-t border-border/40 pt-4">
+          <ThemeToggle />
+          <LanguageSelector />
+        </div>
+
         <button
           onClick={signOut}
-          className="mt-4 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-destructive/15 hover:text-destructive"
+          className="mt-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-destructive/15 hover:text-destructive"
         >
           <LogOut size={18} />
-          خروج
+          {tr.nav_sign_out}
         </button>
       </aside>
 
       {/* Content */}
-      <main className="px-4 pb-28 pt-6 md:mr-72 md:pb-10 md:pl-8 md:pt-8">
-        <div className="mx-auto w-full max-w-3xl">{children}</div>
+      <main className="px-4 pb-28 pt-6 md:me-72 md:pb-10 md:ps-8 md:pt-8">
+        <motion.div
+          className="mx-auto w-full max-w-3xl"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
+          {children}
+        </motion.div>
       </main>
 
       {/* Mobile bottom nav */}

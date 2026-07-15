@@ -1,0 +1,208 @@
+Remix this project and redesign it from the ground up.
+
+Project:
+shrohateck-jpg/remix-of-desha-s-quest
+
+My goal is not a small update. I want a complete redesign with a modern, polished, premium look and much better UX.
+
+========================
+HOME SCREEN
+========================
+
+Remove the current behavior where Google Sign-In appears immediately.
+
+Create a beautiful landing page with:
+
+- Animated background
+- Modern game logo
+- Smooth transitions
+- Floating effects
+- Attractive colors
+- Professional UI
+
+Large primary button:
+
+ابدأ دلوقتي
+
+Below it:
+
+- سجل دخول
+- اعمل حساب
+
+Google Sign-In should only appear inside the Login page as an optional login method.
+
+========================
+LANGUAGES
+========================
+
+Add full multilingual support.
+
+Supported languages:
+
+- Egyptian Arabic (default Arabic)
+- Modern Standard Arabic
+- English
+- French
+- Spanish
+- German
+- Italian
+- Portuguese
+- Turkish
+- Russian
+- Japanese
+- Korean
+- Chinese Simplified
+- Hindi
+- Indonesian
+
+Create a language selector.
+
+Remember the selected language.
+
+Translate every single UI element.
+
+========================
+ARABIC
+========================
+
+Egyptian Arabic should feel natural.
+
+Examples:
+
+ابدأ دلوقتي
+
+سجل دخول
+
+اعمل حساب
+
+رجوع
+
+التالي
+
+حفظ
+
+إلغاء
+
+تمام
+
+جرب تاني
+
+جارى التحميل
+
+مبروك
+
+كسبت
+
+خسرت
+
+حصلت مشكلة
+
+ابدأ المهمة
+
+اختار المهمة
+
+الإعدادات
+
+تسجيل خروج
+
+========================
+AI SYSTEM
+========================
+
+Completely redesign the AI.
+
+The AI should:
+
+Understand:
+
+- Egyptian Arabic
+- Modern Standard Arabic
+- English
+- French
+- Spanish
+- German
+- Italian
+- Mixed languages
+
+It should understand slang, abbreviations and common typing mistakes.
+
+It should understand requests written naturally.
+
+Examples:
+
+اعملي صورة
+
+هاتلي شعار
+
+اكتبلي قصة
+
+اعمل لعبة
+
+اعمل تطبيق
+
+ظبط الصورة
+
+كبرها
+
+صغرها
+
+اعملها كرتون
+
+لوّنها
+
+If the user's request is unclear but contains text, the AI should politely ask:
+
+"ممكن توضح قصدك أو تكتب اسم المهمة بشكل أوضح؟"
+
+Do not guess the user's intent when the request is too vague.
+
+The AI should respond naturally in the language the user is using.
+
+========================
+EXTRA FEATURES
+========================
+
+Improve everything.
+
+Add:
+
+- Better animations
+- Better navigation
+- Better icons
+- Better typography
+- Better spacing
+- Better mobile experience
+- Better desktop experience
+- Better loading screens
+- Better transitions
+- Dark Mode
+- Light Mode
+- Sound effects toggle
+- Music toggle
+- Accessibility improvements
+
+========================
+PERFORMANCE
+========================
+
+Optimize performance.
+
+Fix every bug.
+
+Clean the code.
+
+Remove unused code.
+
+Improve security.
+
+Improve Firebase integration.
+
+========================
+FINAL RESULT
+========================
+
+The project should look like a premium commercial application instead of a prototype.
+
+Think like a senior UX designer, senior frontend engineer and senior AI engineer.
+
+Whenever you find something that can be improved, improve it without asking me first, while keeping the app intuitive and easy to use.

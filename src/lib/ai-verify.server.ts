@@ -1,5 +1,7 @@
 // DESHA — GPT-5.5 vision verification (server-only)
-// All AI functionality runs exclusively on OpenAI GPT-5.5 via the secure gateway.
+// Multilingual: understands Egyptian Arabic, MSA, English, French, Spanish,
+// German, Italian, Portuguese, Turkish, Russian, Japanese, Korean, Chinese,
+// Hindi, Indonesian — and responds in whichever language the user writes in.
 
 export interface VerdictInput {
   title: string;
@@ -11,6 +13,8 @@ export interface VerdictInput {
   imageUrl: string;
   isDuplicate: boolean;
   previousAttempts: number;
+  /** BCP-47 language code of the UI, e.g. "ar-eg", "en", "fr" */
+  userLang?: string;
 }
 
 export interface Verdict {
@@ -20,44 +24,57 @@ export interface Verdict {
   deshaComment: string;
 }
 
-const SYSTEM_PROMPT = `أنت "ديشا" — كائن فانتازيا شرير الشكل بس طيب القلب، بيحكم على تحديات لاعبين في لعبة إنتاجية.
-شغلتك: تبص على صورة الدليل وتقرر هل اللاعب فعلاً عمل التحدي ولا لأ.
+const SYSTEM_PROMPT = `You are "Desha" (ديشا) — a small, mischievous fantasy creature who acts as the judge of a productivity challenge game.
 
-قواعدك:
-1. افهم التحدي كويس (العنوان والوصف والملاحظات).
-2. حلل الصورة: إيه اللي باين فيها فعلاً؟
-3. قارن الصورة بالتحدي. متعتمدش على حاجة واحدة صغيرة لو الدليل ضعيف.
-4. لو الصورة مظلمة أو مش واضحة أو مغطية — اطلب صورة أوضح بدل ما تخمن.
-5. كن حازم بس عادل. متتسرعش في الرفض ولا في القبول.
+Your job: look at the proof image and decide whether the player genuinely completed their challenge.
 
-درجات الثقة:
-- 90-100: مقنعة جداً → accepted
-- 70-89: غالباً عملها → accepted
-- 40-69: مش واضح → needs_more_evidence
-- 0-39: مفيش دليل كفاية → rejected
+Language rule (CRITICAL):
+- Detect the language of the challenge title and notes.
+- Respond in THAT language — Egyptian Arabic, English, French, Spanish, German, Italian, Portuguese, Turkish, Russian, Japanese, Korean, Chinese, Hindi, Indonesian, or whatever the player is using.
+- If the challenge is in Arabic (any dialect), use casual Egyptian Arabic (عامية مصرية).
+- If unclear, default to English.
+- You understand slang, abbreviations, and natural phrasing in all supported languages.
+- Example Arabic slang you understand: "اعملي صورة", "هاتلي شعار", "ظبط الصورة", "كبرها", "صغرها", "اعملها كرتون".
+- If the request is genuinely unclear (too vague, no real task description), politely ask: "ممكن توضح قصدك؟" (Arabic) or the equivalent in the user's language.
 
-رد بصيغة JSON فقط، من غير أي كلام تاني:
-{"decision": "accepted" | "rejected" | "needs_more_evidence", "confidence": 0-100, "reason": "سبب قرارك بالعامية المصرية في جملة أو اتنين", "desha_comment": "تعليقك الساخر الودود بالعامية المصرية للاعب"}
+Your judging rules:
+1. Understand the challenge fully (title, description, notes).
+2. Analyse the image: what is actually visible?
+3. Compare image against the challenge. Don't rely on one tiny detail if evidence is weak.
+4. If the image is dark, blurry, or obscured — ask for a clearer photo instead of guessing.
+5. Be firm but fair. Don't rush to reject OR accept.
 
-قواعد الكلام: عامية مصرية بس. ساخر وضاحك بس مش جارح أبداً. زي صاحب مصري بيهزر.`;
+Confidence → decision mapping:
+- 90-100: convincing → accepted
+- 70-89: likely done → accepted
+- 40-69: unclear → needs_more_evidence
+- 0-39: insufficient proof → rejected
+
+Tone: You are sarcastic, witty, and friendly — like a mischievous best friend who jokes around but is never cruel. Match the energy of the player's language (casual for casual, polite for polite).
+
+Reply in strict JSON only — no extra text:
+{"decision": "accepted" | "rejected" | "needs_more_evidence", "confidence": 0-100, "reason": "2-sentence explanation in the player's language", "desha_comment": "short sarcastic-but-kind comment in the player's language, Desha's voice"}`;
 
 export async function judgeProofImage(input: VerdictInput): Promise<Verdict> {
   const key = process.env.LOVABLE_API_KEY;
   if (!key) throw new Error("ai_unavailable");
 
   const contextText = [
-    `التحدي: ${input.title}`,
-    input.description ? `الوصف: ${input.description}` : null,
-    input.notes ? `ملاحظات اللاعب: ${input.notes}` : null,
-    `المدة المخططة: ${input.durationMinutes} دقيقة`,
-    `بدأ: ${input.startedAt}`,
-    `المفروض يخلص: ${input.endsAt}`,
-    `دلوقتي: ${new Date().toISOString()}`,
+    `Challenge: ${input.title}`,
+    input.description ? `Description: ${input.description}` : null,
+    input.notes ? `Player notes: ${input.notes}` : null,
+    `Planned duration: ${input.durationMinutes} minutes`,
+    `Started: ${input.startedAt}`,
+    `Should end by: ${input.endsAt}`,
+    `Now: ${new Date().toISOString()}`,
+    input.userLang ? `UI language: ${input.userLang}` : null,
     input.isDuplicate
-      ? "تحذير مهم: نفس الصورة دي اترفعت قبل كده من نفس اللاعب في تحدي تاني. ده مؤشر غش قوي — خفّض الثقة جداً واطلب دليل جديد أو ارفض."
+      ? "⚠️ WARNING: This exact image was submitted before by this player in a different challenge. Strong cheat signal — heavily reduce confidence and request fresh proof."
       : null,
-    input.previousAttempts > 0 ? `عدد المحاولات السابقة على نفس التحدي: ${input.previousAttempts}` : null,
-    "بص على الصورة المرفقة وقرر.",
+    input.previousAttempts > 0
+      ? `Previous attempts on this challenge: ${input.previousAttempts}`
+      : null,
+    "Look at the attached image and make your decision.",
   ]
     .filter(Boolean)
     .join("\n");
@@ -115,18 +132,20 @@ export async function judgeProofImage(input: VerdictInput): Promise<Verdict> {
       : "needs_more_evidence";
 
   let confidence = Math.max(0, Math.min(100, Math.round(Number(parsed.confidence ?? 0)) || 0));
-
-  // Anti-cheat signal: exact duplicate image caps confidence hard.
   if (input.isDuplicate && confidence > 35) confidence = 35;
+  const finalDecision: Verdict["decision"] =
+    input.isDuplicate && decision === "accepted" ? "needs_more_evidence" : decision;
 
-  const finalDecision: Verdict["decision"] = input.isDuplicate && decision === "accepted" ? "needs_more_evidence" : decision;
+  const fallbackComment =
+    finalDecision === "accepted"
+      ? "أهو كده يا بطل 😈"
+      : "وريني دليل أحسن من كده.";
 
   return {
     decision: finalDecision,
     confidence,
-    reason: String(parsed.reason ?? "").slice(0, 500) || "مفيش تفاصيل.",
+    reason: String(parsed.reason ?? "").slice(0, 500) || "—",
     deshaComment:
-      String(parsed.desha_comment ?? "").slice(0, 300) ||
-      (finalDecision === "accepted" ? "أهو كده يا بطل 😈" : "وريني دليل أحسن من كده."),
+      String(parsed.desha_comment ?? "").slice(0, 300) || fallbackComment,
   };
 }
